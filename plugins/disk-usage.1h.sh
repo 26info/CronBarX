@@ -14,19 +14,10 @@ if [ -n "$disk_info" ]; then
     used=$(echo "$disk_info" | awk '{print $3}')
     total=$(echo "$disk_info" | awk '{print $2}')
 
-    # Выводим информацию с цветовой индикацией
-    if [ "$usage_percent" -lt 70 ]; then
-        color="green"  # зеленый
-    elif [ "$usage_percent" -lt 85 ]; then
-        color="orange"  # желтый/оранжевый
-     else
-        color="red"  # красный
-    fi
-
-    echo "💾 $usage_percent% | color=${color}"
+    echo "💾 $usage_percent%"
     echo "---"
     echo "Информация о диске:"
-    echo "$disk_info | color=${color}"
+    echo "$disk_info"
     echo "Использовано: $used из $total"
 else
     echo "💾 не найден"
