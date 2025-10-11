@@ -2,8 +2,8 @@
 
 <div align="center">
 
+🇺🇸 **Lightweight xbar alternative with plugin support** 
 🇷🇺 **Легковесная альтернатива xbar с поддержкой плагинов**  
-🇺🇸 **Lightweight xbar alternative with plugin support**
 
 [![Swift](https://img.shields.io/badge/Swift-4.2-orange?logo=swift)](https://swift.org/)
 [![macOS](https://img.shields.io/badge/macOS-10.13+-blue?logo=apple)](https://www.apple.com/macos/)
@@ -11,9 +11,54 @@
 [![Memory](https://img.shields.io/badge/Memory-~20_MB-success.svg)]()
 [![Downloads](https://img.shields.io/github/downloads/26info/CronBarX/total.svg)](https://github.com/26info/CronBarX/releases)
 
-[Русский](#русский) • [English](#english)
+ [English](#english) • [Русский](#русский)
 
 </div>
+
+---
+
+## English
+
+🚀 **Lightweight macOS status bar manager with multi-instance and plugin support**
+
+### ✨ Features
+
+— **Multi-instances** — run multiple scripts simultaneously  
+— **Plugin manager** — install plugins directly from GitHub repository  
+— **Auto-update** — automatic script output refresh  
+— **Low memory usage** — ~20 MB vs 40+ MB in xbar  
+— **Native interface** — full integration with macOS  
+— **Bash/zsh support** — works with any shell scripts  
+
+### 📊 Comparison with xbar
+
+| Feature | **CronBarX** | **xbar** |
+|---------|--------------|----------|
+| Memory usage | ~20 MB | ~40-50 MB |
+| Performance | High | Medium |
+| Multi-instances | ✅ Built-in support | ❌ Plugins only |
+| Plugin manager | ✅ Built-in | ✅ Available |
+| Nativeness | Full macOS integration | Electron app |
+| Ease of use | Intuitive interface | Similar |
+
+### 🚀 Quick Start
+
+1. Launch CronBarX  
+2. Click the ⚙️ icon in the status bar  
+3. Select "Create new instance"  
+4. Choose your shell script  
+5. Done! The script will appear in the status bar  
+
+### 📝 Script Format
+
+CronBarX supports the same format as xbar:
+
+```bash
+#!/bin/bash
+echo "🔄 $(date '+%H:%M:%S')"
+echo "---"
+echo "System Information | bash='system_profiler'"
+echo "Refresh | refresh=true"
 
 ---
 
@@ -61,47 +106,3 @@ echo "Системная информация | bash='system_profiler'"
 echo "Обновить | refresh=true"
 ```
 
----
-
-## English
-
-🚀 **Lightweight macOS status bar manager with multi-instance and plugin support**
-
-### ✨ Features
-
-— **Multi-instances** — run multiple scripts simultaneously  
-— **Plugin manager** — install plugins directly from GitHub repository  
-— **Auto-update** — automatic script output refresh  
-— **Low memory usage** — ~20 MB vs 40+ MB in xbar  
-— **Native interface** — full integration with macOS  
-— **Bash/zsh support** — works with any shell scripts  
-
-### 📊 Comparison with xbar
-
-| Feature | **CronBarX** | **xbar** |
-|---------|--------------|----------|
-| Memory usage | ~20 MB | ~40-50 MB |
-| Performance | High | Medium |
-| Multi-instances | ✅ Built-in support | ❌ Plugins only |
-| Plugin manager | ✅ Built-in | ✅ Available |
-| Nativeness | Full macOS integration | Electron app |
-| Ease of use | Intuitive interface | Similar |
-
-### 🚀 Quick Start
-
-1. Launch CronBarX  
-2. Click the ⚙️ icon in the status bar  
-3. Select "Create new instance"  
-4. Choose your shell script  
-5. Done! The script will appear in the status bar  
-
-### 📝 Script Format
-
-CronBarX supports the same format as xbar:
-
-```bash
-#!/bin/bash
-echo "🔄 $(date '+%H:%M:%S')"
-echo "---"
-echo "System Information | bash='system_profiler'"
-echo "Refresh | refresh=true"
