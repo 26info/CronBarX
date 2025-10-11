@@ -116,43 +116,45 @@ get_disk_type() {
 }
 
 # Функция для получения температуры
+# Универсальная функция для получения температуры
 get_temperature() {
     local smart_info="$1"
     
-    local temp_line=$(echo "$smart_info" | grep -E "(Temperature_Celsius|Airflow_Temperature_Cel|Temperature:|Celsius)" | head -1)
-
-    if [ -n "$temp_line" ]; then
-        local temp_value=""
-        
-        temp_value=$(echo "$temp_line" | grep -oE '[0-9]+[[:space:]]*Celsius' | grep -oE '[0-9]+' | head -1)
-        
-        if [ -z "$temp_value" ]; then
-            temp_value=$(echo "$temp_line" | awk '{
-                for(i=1;i<=NF;i++) {
-                    if($i ~ /^[0-9]+$/ && $i > 0 && $i < 150) {
-                        print $i
-                        exit
-                    }
-                }
-            }')
-        fi
-        
-        if [ -z "$temp_value" ]; then
-            temp_value=$(echo "$temp_line" | sed 's/Temperature:[[:space:]]*//' | grep -oE '^[0-9]+' | head -1)
-        fi
-        
-        if [ -z "$temp_value" ]; then
-            temp_value=$(echo "$temp_line" | grep -oE '\b[0-9]{1,3}\b' | awk '$1 > 0 && $1 < 150 {print $1; exit}')
-        fi
-        
-        if [ -n "$temp_value" ]; then
-            echo "$temp_value"
-        else
-            echo ""
-        fi
-    else
-        echo ""
+    # Пробуем разные способы найти температуру
+    
+    # 1. Ищем в атрибутах SMART (поле RAW_VALUE)
+    temp_attr=$(echo "$smart_info" | grep -E "^[[:space:]]*(190|194|197|198|199)" | grep -v "0[[:space:]]*\-" | awk '{print $10}' | grep -E "^[0-9]+$" | head -1)
+    
+    if [ -n "$temp_attr" ] && [ "$temp_attr" -gt 0 ] && [ "$temp_attr" -lt 150 ]; then
+        echo "$temp_attr"
+        return 0
     fi
+    
+    # 2. Ищем в строке с Temperature (NVMe диски)
+    temp_line=$(echo "$smart_info" | grep -i "temperature" | grep -E "[0-9]+" | head -1)
+    if [ -n "$temp_line" ]; then
+        temp_value=$(echo "$temp_line" | grep -oE "[0-9]{1,3}" | head -1)
+        if [ -n "$temp_value" ] && [ "$temp_value" -gt 0 ] && [ "$temp_value" -lt 150 ]; then
+            echo "$temp_value"
+            return 0
+        fi
+    fi
+    
+    # 3. Ищем в Current Drive Temperature
+    temp_current=$(echo "$smart_info" | grep -i "current drive temperature" | grep -oE "[0-9]{1,3}" | head -1)
+    if [ -n "$temp_current" ] && [ "$temp_current" -gt 0 ] && [ "$temp_current" -lt 150 ]; then
+        echo "$temp_current"
+        return 0
+    fi
+    
+    # 4. Ищем в Airflow Temperature
+    temp_airflow=$(echo "$smart_info" | grep -i "airflow temperature" | grep -oE "[0-9]{1,3}" | head -1)
+    if [ -n "$temp_airflow" ] && [ "$temp_airflow" -gt 0 ] && [ "$temp_airflow" -lt 150 ]; then
+        echo "$temp_airflow"
+        return 0
+    fi
+    
+    return 1
 }
 
 # Функция для получения здоровья диска
