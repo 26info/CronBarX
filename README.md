@@ -59,7 +59,7 @@ echo "🔄 $(date '+%H:%M:%S')"
 echo "---"
 echo "System Information | bash='system_profiler'"
 echo "Refresh | refresh=true"
-
+```
 ---
 
 ## Русский
