@@ -2,3 +2,4 @@
 *.swift linguist-language=Swift
 *.sh linguist-detectable=false
 *.bash linguist-detectable=false
+*.py linguist-detectable=false
