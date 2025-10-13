@@ -21,5 +21,4 @@ else
 fi
 
 echo "---"
-echo "🔄 Обновить | refresh=true"
-echo "🔧 Настройки сети | shell=open \"System Settings\""
+echo "🔧 Настройки сети | shell=open /System/Library/PreferencePanes/Network.prefPane"
