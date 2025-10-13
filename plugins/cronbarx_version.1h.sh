@@ -23,7 +23,7 @@ main() {
     if [ -n "$latest_version" ] && [ "$latest_version" != "unknown" ]; then
         echo "🔄 CronBarX $latest_version"
         echo "---"
-        echo "Последняя версия CronBarX $latest_version | color=green"
+        echo "Последняя версия CronBarX $latest_version"
         echo "---"
         echo "📦 Скачать | shell=open $GITHUB_REPO"
         echo "🐛 Репозиторий | shell=open https://github.com/26info/CronBarX"
