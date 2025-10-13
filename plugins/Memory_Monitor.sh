@@ -40,8 +40,11 @@ get_memory_info() {
 
 # Функция для получения информации о swap
 get_swap_info() {
-    local swap_used=$(sysctl -n vm.swapusage | awk '{print $4}' | sed 's/M//')
-    local swap_total=$(sysctl -n vm.swapusage | awk '{print $7}' | sed 's/M//')
+    local swap_info=$(sysctl -n vm.swapusage)
+    
+    # Извлекаем числа с плавающей точкой и конвертируем в целые
+    local swap_used=$(echo "$swap_info" | awk '{printf "%.0f", $4}')
+    local swap_total=$(echo "$swap_info" | awk '{printf "%.0f", $7}')
     local swap_percent=0
     
     if [ "$swap_total" -gt 0 ]; then
@@ -137,8 +140,7 @@ main() {
     
     # Действия
     echo "📊 Действия:"
-    echo "🔄 Обновить | refresh=true"
-    echo "🔍 Монитор активности | shell=open -a \"Activity Monitor\""
+    echo "🔍 Монитор активности | shell=open \"Activity Monitor\""
     echo "🗑️ Очистить память (purge) | shell=\"$0\" _purge_memory"
 }
 
