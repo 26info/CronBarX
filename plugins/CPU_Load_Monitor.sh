@@ -22,5 +22,4 @@ ps -erco %cpu,comm | head -6 | while read line; do
     echo "• $line"
 done
 echo "---"
-echo "🔄 Обновить | refresh=true"
-echo "🔍 Монитор активности | shell=open -a \"Activity Monitor\""
+echo "🔍 Монитор активности | shell=open \"Activity Monitor\""
