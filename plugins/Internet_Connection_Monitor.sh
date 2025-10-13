@@ -22,4 +22,4 @@ fi
 
 echo "---"
 echo "🔄 Обновить | refresh=true"
-echo "🔧 Настройки сети | shell=open -a \"System Settings\""
+echo "🔧 Настройки сети | shell=open \"System Settings\""
