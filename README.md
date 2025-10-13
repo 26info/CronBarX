@@ -63,6 +63,17 @@ echo "---"
 echo "System Information | bash='system_profiler'"
 echo "Refresh | refresh=true"
 ```
+
+### 🔧 Debugging & Logs
+
+CronBarX includes comprehensive file logging for easy troubleshooting:
+
+**Log file location:**
+
+```
+~/Library/Application Support/CronBarX/cronbarx.log
+```
+
 ---
 
 ## Русский
@@ -110,5 +121,14 @@ echo "🔄 $(date '+%H:%M:%S')"
 echo "---"
 echo "Системная информация | bash='system_profiler'"
 echo "Обновить | refresh=true"
+```
+### 🔧 Отладка и логи
+
+CronBarX включает подробное файловое логирование для удобной диагностики проблем:
+
+**Расположение файла лога:**
+
+```
+~/Library/Application Support/CronBarX/cronbarx.log
 ```
 
