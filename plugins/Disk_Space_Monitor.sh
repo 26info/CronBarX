@@ -20,4 +20,4 @@ done
 
 echo "---"
 echo "🔄 Обновить | refresh=true"
-echo "📊 Дисковая утилита | shell=open \"Disk Utility\""
+echo "📊 Дисковая утилита | shell=open -a \"Disk Utility\""
