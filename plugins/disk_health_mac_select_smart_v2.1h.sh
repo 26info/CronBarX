@@ -335,19 +335,30 @@ get_key_attributes() {
 # Функция для получения заполненности диска в %
 get_disk_usage() {
     local disk_device="$1"
+    local disk_id=$(basename "$disk_device")
     
-    local mount_point=$(mount | grep "$(basename "$disk_device")" | awk '{print $3}' | head -1)
+    echo "=== DEBUG get_disk_usage: $disk_id ===" > /tmp/disk_debug.log
     
-    if [ -z "$mount_point" ]; then
-        mount_point=$(diskutil info "$disk_device" 2>/dev/null | grep "Mount Point" | cut -d: -f2 | sed 's/^ *//')
-    fi
+    # Получаем список всех разделов
+    local all_partitions=$(diskutil list "$disk_id" | grep -E "^.*[0-9]:.*" | awk '{print $NF}')
+    echo "All partitions: $all_partitions" >> /tmp/disk_debug.log
     
-    if [ -n "$mount_point" ] && [ "$mount_point" != "Not applicable" ]; then
-        local usage=$(df -h "$mount_point" 2>/dev/null | awk 'NR==2 {print $5}' | sed 's/%//')
-        echo "$usage"
-    else
-        echo ""
-    fi
+    # Ищем первый смонтированный раздел с данными использования
+    for partition in $all_partitions; do
+        echo "Checking partition: $partition" >> /tmp/disk_debug.log
+        
+        local usage=$(df -h 2>/dev/null | grep "/dev/$partition" | awk '{print $5}' | sed 's/%//' | head -1)
+        
+        if [ -n "$usage" ] && [[ "$usage" =~ ^[0-9]+$ ]]; then
+            echo "Found usage for $partition: $usage%" >> /tmp/disk_debug.log
+            echo "$usage"
+            return 0
+        fi
+    done
+    
+    echo "No usage found" >> /tmp/disk_debug.log
+    echo ""
+    return 1
 }
 
 # Функция для получения имени диска для отображения
@@ -355,20 +366,15 @@ get_disk_display_name() {
     local disk="$1"
     local smartctl="$2"
     
+    local disk_id=$(basename "$disk")
     local model=$(sudo "$smartctl" -i "$disk" 2>/dev/null | grep -E "(Device Model|Model Number|Product:)" | head -1 | cut -d: -f2- | sed 's/^ *//')
-    
-    local mount_point=$(diskutil info "$disk" 2>/dev/null | grep "Mount Point" | cut -d: -f2 | sed 's/^ *//')
     
     local display_name=""
     
     if [ -n "$model" ]; then
         display_name="$model"
     else
-        display_name="$(basename "$disk")"
-    fi
-    
-    if [ -n "$mount_point" ] && [ "$mount_point" != "Not applicable" ]; then
-        display_name="$display_name ($mount_point)"
+        display_name="$disk_id"
     fi
     
     echo "$display_name"
@@ -512,14 +518,24 @@ esac
 
 # Вывод в строку меню
 DISK_USAGE=$(get_disk_usage "$SELECTED_DISK")
-if [ -n "$DISK_USAGE" ]; then
-    DISK_USAGE_PERCENT="${DISK_USAGE}% "
-fi
 DISPLAY_NAME=$(get_disk_display_name "$SELECTED_DISK" "$SMARTCTL")
+
+# Для отладки
+echo "DEBUG: Selected: $SELECTED_DISK, Usage: $DISK_USAGE, Temp: $TEMPERATURE, Health: $HEALTH_STATUS" >> /tmp/disk_menu_debug.log
+
+# Определяем, что показывать в баре
 if [ -n "$TEMPERATURE" ]; then
-    echo "💽${STATUS_ICON} ${DISK_USAGE_PERCENT}${TEMPERATURE}°C"
+    if [ -n "$DISK_USAGE" ]; then
+        echo "💽${STATUS_ICON} ${DISK_USAGE}% ${TEMPERATURE}°C"
+    else
+        echo "💽${STATUS_ICON} ${TEMPERATURE}°C"
+    fi
 else
-    echo "💽 $(basename "$SELECTED_DISK") ${STATUS_ICON}"
+    if [ -n "$DISK_USAGE" ]; then
+        echo "💽${STATUS_ICON} ${DISK_USAGE}%"
+    else
+        echo "💽${STATUS_ICON}"
+    fi
 fi
 
 echo "---"
@@ -531,6 +547,12 @@ echo "🎯 Выбор диска для анализа:"
 
 for disk in "${SMART_DISKS[@]}"; do
     disk_name=$(get_disk_display_name "$disk" "$SMARTCTL")
+    disk_usage=$(get_disk_usage "$disk")
+    
+    if [ -n "$disk_usage" ]; then
+        disk_name="$disk_name ($disk_usage%)"
+    fi
+    
     if [ "$disk" = "$SELECTED_DISK" ]; then
         echo "✓ $disk_name"
     else
@@ -541,7 +563,7 @@ done
 echo "---"
 
 # Основная информация
-echo "💽 Состояние диска: $(basename "$SELECTED_DISK")"
+echo "💽 Состояние диска: $DISPLAY_NAME"
 echo "---"
 echo "Устройство: $SELECTED_DISK"
 echo "Тип: $DISK_TYPE"
@@ -563,15 +585,20 @@ fi
 
 # Заполненность диска
 if [ -n "$DISK_USAGE" ] && [[ "$DISK_USAGE" =~ ^[0-9]+$ ]]; then
+    echo "Заполненность: ${DISK_USAGE}%"
+    
     if [ "$DISK_USAGE" -lt 70 ]; then
-        echo "Заполненность: ${DISK_USAGE}%"
+        echo "→ ✅ Нормальная заполненность"
     elif [ "$DISK_USAGE" -lt 85 ]; then
-        echo "Заполненность: ${DISK_USAGE}%"
+        echo "→ ⚠️ Средняя заполненность"
     else
-        echo "Заполненность: ${DISK_USAGE}%"
+        echo "→ 🔴 Высокая заполненность"
+        echo "Рекомендуется освободить место"
     fi
+else
+    echo "Заполненность: неизвестно"
+    echo "→ Диск не смонтирован или недоступен"
 fi
-
 # Ключевые атрибуты
 echo "---"
 echo "📊 Ключевые параметры:"
@@ -588,6 +615,8 @@ echo "---"
 echo "📊 Действия:"
 echo "Полный отчет (терминал) | shell=\"$0\" _show_full_report_terminal"
 echo "Базовая информация | shell=\"$0\" _show_basic_info"
+echo "---"
+echo "🐛 Отладка | shell=\"echo 'Проверьте /tmp/disk_monitor_debug.log и /tmp/disk_debug.log' && open /tmp/\""
 
 # Обработка команд
 case "$1" in
