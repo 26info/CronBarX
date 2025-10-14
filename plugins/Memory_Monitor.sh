@@ -140,7 +140,7 @@ main() {
     
     # Действия
     echo "📊 Действия:"
-    echo "🔍 Монитор активности | shell=open \"Activity Monitor\""
+    echo "🔍 Монитор активности | shell=open -a \"Activity Monitor\""
     echo "🗑️ Очистить память (purge) | shell=\"$0\" _purge_memory"
 }
 
