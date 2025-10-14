@@ -2,15 +2,16 @@
 # Монитор дисков для CronBarX (без sudo)
 
 # Прямой путь к smartctl
-SMARTCTL="/opt/homebrew/bin/smartctl"
+#which smartctl (найти путь к smartctl)
+SMARTCTL="/usr/local/bin/smartctl"
 # Основной диск
 DISK="/dev/disk0"
 # Основной контейнер
-DPART="/dev/disk3s1"
+DPART="/dev/disk1s1"
 
 # Функция для получения информации о использовании диска
 get_disk_usage() {
-    local disk_info=$(df -h | grep -E "(Volumes/Data)" | grep "${DPART}")
+    local disk_info=$(df -h | grep -E "(/)" | grep "${DPART}")
     
     if [ -n "$disk_info" ]; then
         usage_percent=$(echo "$disk_info" | awk '{print $5}' | sed 's/%//')
@@ -58,7 +59,7 @@ get_temperature() {
     # Пробуем разные способы найти температуру
     
     # 1. Ищем в атрибутах SMART (поле RAW_VALUE)
-    temp_attr=$(echo "$smart_info" | grep -E "^[[:space:]]*(190|194|197|198|199)" | grep -v "0[[:space:]]*\-" | awk '{print $10}' | grep -E "^[0-9]+$" | head -1)
+    temp_attr=$(echo "$smart_info" | grep -E "^[[:space:]]*(190|194|197|198|199)" | grep -v "0[[:space:]]*\-" | awk '{if ($10 ~ /^[0-9]+$/) print $10}' | head -1)
     
     if [ -n "$temp_attr" ] && [ "$temp_attr" -gt 0 ] && [ "$temp_attr" -lt 150 ]; then
         echo "$temp_attr"
@@ -169,7 +170,7 @@ if [ -n "$usage_percent" ] && [ "$usage_percent" != "?" ]; then
     elif [ "$usage_percent" -gt 80 ]; then
         echo "→ 🟡 Высокое заполнение"
     else
-        echo "→ 🟢 Нормальное заполнение"
+        echo "→ ✅ Нормальное заполнение"
     fi
 else
     echo "Данные о использовании: не доступны"
