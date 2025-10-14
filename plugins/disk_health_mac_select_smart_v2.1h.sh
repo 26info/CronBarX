@@ -589,9 +589,6 @@ echo "📊 Действия:"
 echo "Полный отчет (терминал) | shell=\"$0\" _show_full_report_terminal"
 echo "Базовая информация | shell=\"$0\" _show_basic_info"
 
-echo "---"
-echo "🔄 Обновить | refresh=true"
-
 # Обработка команд
 case "$1" in
     "_select_disk")
