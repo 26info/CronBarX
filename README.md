@@ -35,7 +35,7 @@
 | Feature | **CronBarX** | **xbar** |
 |---------|--------------|----------|
 | **Technology** | Native macOS (Swift/Objective-C) | Native macOS (Swift) |
-| **Memory Usage** | ~20 MB | ~40-50 MB |
+| **Memory Usage** | ~30 MB | ~40-50 MB |
 | **Performance** | Optimized for low resource usage | Native performance |
 | **Architecture** | Multi-instance support | Single app with plugin system |
 | **Plugin Manager** | ✅ Built-in GUI | ✅ File-based management |
@@ -94,7 +94,7 @@ CronBarX includes comprehensive file logging for easy troubleshooting:
 | Функция | **CronBarX** | **xbar** |
 |---------|--------------|----------|
 | **Технология** | Нативное macOS (Swift/Objective-C) | Нативное macOS (Swift) |
-| **Использование памяти** | ~20 МБ | ~40-50 МБ |
+| **Использование памяти** | ~30 МБ | ~40-50 МБ |
 | **Производительность** | Оптимизирована для низкого потребления ресурсов | Нативная производительность |
 | **Архитектура** | Поддержка нескольких экземпляров | Одиночное приложение с системой плагинов |
 | **Менеджер плагинов** | ✅ Встроенный графический интерфейс | ✅ Файловое управление |
