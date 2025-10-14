@@ -60,7 +60,7 @@ CronBarX supports the same format as xbar:
 #!/bin/bash
 echo "🔄 $(date '+%H:%M:%S')"
 echo "---"
-echo "System Information | bash='system_profiler'"
+echo "Open Terminal | shell=open Terminal"
 echo "Refresh | refresh=true"
 ```
 
@@ -119,7 +119,7 @@ CronBarX поддерживает тот же формат, что и xbar:
 #!/bin/bash
 echo "🔄 $(date '+%H:%M:%S')"
 echo "---"
-echo "Системная информация | bash='system_profiler'"
+echo "Открыть Терминал | shell=open Terminal"
 echo "Обновить | refresh=true"
 ```
 ### 🔧 Отладка и логи
