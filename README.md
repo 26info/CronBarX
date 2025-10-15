@@ -26,7 +26,7 @@
 — **Multi-instances** — run multiple scripts simultaneously  
 — **Plugin manager** — install plugins directly from GitHub repository  
 — **Auto-update** — automatic script output refresh  
-— **Low memory usage** — ~20 MB vs 40+ MB in xbar  
+— **Low memory usage** — ~30 MB  
 — **Native interface** — full integration with macOS  
 — **Bash/zsh support** — works with any shell scripts  
 
@@ -35,7 +35,6 @@
 | Feature | **CronBarX** | **xbar** |
 |---------|--------------|----------|
 | **Technology** | Native macOS (Swift/Objective-C) | Native macOS (Swift) |
-| **Memory Usage** | ~30 MB | ~40-50 MB |
 | **Performance** | Optimized for low resource usage | Native performance |
 | **Architecture** | Multi-instance support | Single app with plugin system |
 | **Plugin Manager** | ✅ Built-in GUI | ✅ File-based management |
@@ -85,7 +84,7 @@ CronBarX includes comprehensive file logging for easy troubleshooting:
 — **Мульти-инстансы** — запускайте несколько скриптов одновременно  
 — **Менеджер плагинов** — устанавливайте плагины прямо из GitHub репозитория  
 — **Автообновление** — автоматическое обновление вывода скриптов  
-— **Низкое потребление памяти** — ~20 МБ против 40+ МБ у xbar  
+— **Низкое потребление памяти** — ~30 МБ  
 — **Нативный интерфейс** — полная интеграция с macOS  
 — **Поддержка bash/zsh** — работает с любыми shell-скриптами  
 
@@ -94,7 +93,6 @@ CronBarX includes comprehensive file logging for easy troubleshooting:
 | Функция | **CronBarX** | **xbar** |
 |---------|--------------|----------|
 | **Технология** | Нативное macOS (Swift/Objective-C) | Нативное macOS (Swift) |
-| **Использование памяти** | ~30 МБ | ~40-50 МБ |
 | **Производительность** | Оптимизирована для низкого потребления ресурсов | Нативная производительность |
 | **Архитектура** | Поддержка нескольких экземпляров | Одиночное приложение с системой плагинов |
 | **Менеджер плагинов** | ✅ Встроенный графический интерфейс | ✅ Файловое управление |
