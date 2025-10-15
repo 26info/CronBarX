@@ -59,7 +59,7 @@ CronBarX supports the same format as xbar:
 #!/bin/bash
 echo "🔄 $(date '+%H:%M:%S')"
 echo "---"
-echo "Open Terminal | shell=open Terminal"
+echo "Open Terminal | shell=open -a Terminal"
 echo "Refresh | refresh=true"
 ```
 
@@ -117,7 +117,7 @@ CronBarX поддерживает тот же формат, что и xbar:
 #!/bin/bash
 echo "🔄 $(date '+%H:%M:%S')"
 echo "---"
-echo "Открыть Терминал | shell=open Terminal"
+echo "Открыть Терминал | shell=open -a Terminal"
 echo "Обновить | refresh=true"
 ```
 ### 🔧 Отладка и логи
