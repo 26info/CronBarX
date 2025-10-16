@@ -1,40 +1,50 @@
 #!/bin/bash
 # Умные команды - CronBarX
 
+# Получаем абсолютный путь к скрипту
+SCRIPT_PATH="$0"
+
 # Функция для показа диалога
 show_dialog() {
-    osascript -e "display dialog \"$1\" buttons {\"OK\"} default button 1"
+    osascript -e "display dialog \"$1\" buttons {\"OK\"} default button 1" &>/dev/null
 }
 
 # Функция для показа уведомления
 show_notification() {
-    osascript -e "display notification \"$1\" with title \"$2\""
+    osascript -e "display notification \"$1\" with title \"$2\"" &>/dev/null
 }
 
 # Функции для команд
 show_time() {
-    show_notification "$(date)" "Текущее время"
+    show_notification "$(date +'%H:%M:%S %d.%m.%Y')" "Текущее время"
 }
 
 show_system() {
-    show_dialog "Системная информация:\n\nПользователь: $(whoami)\nХост: $(hostname)\nmacOS: $(sw_vers -productVersion)\nПроцессор: $(sysctl -n machdep.cpu.brand_string)"
+    local user=$(whoami)
+    local host=$(hostname)
+    local os_version=$(sw_vers -productVersion 2>/dev/null || echo "Неизвестно")
+    local cpu=$(sysctl -n machdep.cpu.brand_string 2>/dev/null || echo "Неизвестно")
+    show_dialog "Системная информация:\n\nПользователь: $user\nХост: $host\nmacOS: $os_version\nПроцессор: $cpu"
 }
 
 show_processes() {
-    show_dialog "Топ процессов:\n\n$(ps aux | head -6)"
+    local processes=$(ps aux | head -6 2>/dev/null || echo "Не удалось получить процессы")
+    show_dialog "Топ процессов:\n\n$processes"
 }
 
 show_disk() {
-    show_dialog "Дисковое пространство:\n\n$(df -h / | head -2)"
+    local disk_info=$(df -h / | head -2 2>/dev/null || echo "Не удалось получить информацию о диске")
+    show_dialog "Дисковое пространство:\n\n$disk_info"
 }
 
 show_network() {
-    local_ip=$(ipconfig getifaddr en0 2>/dev/null || echo "Недоступно")
-    show_dialog "Сетевая информация:\n\nЛокальный IP: $local_ip\nВнешний IP: $(curl -s http://ifconfig.me)"
+    local local_ip=$(ipconfig getifaddr en0 2>/dev/null || ipconfig getifaddr en1 2>/dev/null || echo "Недоступно")
+    local external_ip=$(curl -s --connect-timeout 5 http://ifconfig.me 2>/dev/null || echo "Недоступно")
+    show_dialog "Сетевая информация:\n\nЛокальный IP: $local_ip\nВнешний IP: $external_ip"
 }
 
 show_battery() {
-    battery_info=$(pmset -g batt | grep -E "([0-9]+%)|(AC|Battery)")
+    local battery_info=$(pmset -g batt 2>/dev/null | grep -E "([0-9]+%)|(AC|Battery)" | head -1 || echo "Информация о батарее недоступна")
     show_notification "$battery_info" "Батарея"
 }
 
@@ -43,21 +53,21 @@ echo "🛠️ Умные команды"
 echo "---"
 
 echo "💻 Системная информация"
-echo "-- 🕐 Показать время | shell=/bin/bash -c \"'$0' _show_time\""
-echo "-- 🖥️ Показать систему | shell=/bin/bash -c \"'$0' _show_system\""
-echo "-- 🔄 Показать процессы | shell=/bin/bash -c \"'$0' _show_processes\""
-echo "-- 💾 Показать диск | shell=/bin/bash -c \"'$0' _show_disk\""
-echo "-- 🌐 Показать сеть | shell=/bin/bash -c \"'$0' _show_network\""
-echo "-- 🔋 Показать батарею | shell=/bin/bash -c \"'$0' _show_battery\""
+echo "-- 🕐 Показать время | shell=\"$SCRIPT_PATH\" param1=\"_show_time\""
+echo "-- 🖥️ Показать систему | shell=\"$SCRIPT_PATH\" param1=\"_show_system\""
+echo "-- 🔄 Показать процессы | shell=\"$SCRIPT_PATH\" param1=\"_show_processes\""
+echo "-- 💾 Показать диск | shell=\"$SCRIPT_PATH\" param1=\"_show_disk"\
+echo "-- 🌐 Показать сеть | shell=\"$SCRIPT_PATH\" param1=\"_show_network\""
+echo "-- 🔋 Показать батарею | shell=\"$SCRIPT_PATH\" param1=\"_show_battery\""
 
 echo "---"
 
 echo "⚡ Быстрые действия"
-echo "-- 📂 Открыть Терминал | shell=open -a Terminal"
-echo "-- ⚙️ Открыть Настройки | shell=open x-apple.systempreferences:"
+echo "-- 📂 Открыть Терминал | shell=open -a 'Terminal' ."
+echo "-- ⚙️ Открыть Настройки | shell=open 'x-apple.systempreferences:'"
 echo "-- 📊 Монитор активности | shell=open -a 'Activity Monitor'"
-echo "-- 🏠 Домашняя папка | shell=open ~/"
-echo "-- 📥 Загрузки | shell=open ~/Downloads"
+echo "-- 🏠 Домашняя папка | shell=open param1=\"$HOME\""
+echo "-- 📥 Загрузки | shell=open param1=\"$HOME/Downloads\""
 
 echo "---"
 
@@ -66,10 +76,18 @@ echo "-- 🔔 Простое уведомление | shell=osascript -e 'displa
 echo "-- 👋 Приветствие | shell=osascript -e 'display notification \"Привет, $(whoami)!\" with title \"Добро пожаловать\"'"
 
 echo "---"
+
+echo "🧹 Системные утилиты"
+echo "-- 📝 Редактор plist | shell=open -a 'Property List Editor'"
+echo "-- 🔍 Просмотр логов | shell=open -a 'Console'"
+echo "-- 🎨 Цветовой профиль | shell=open -a 'ColorSync Utility'"
+
+echo "---"
+
 echo "🔄 Обновить | refresh=true"
 
-# Обработка команд (с префиксом _ чтобы избежать конфликтов)
-case "$1" in
+# Обработка команд
+case "${1:-}" in
     "_show_time")
         show_time
         ;;
