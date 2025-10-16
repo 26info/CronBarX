@@ -141,7 +141,7 @@ main() {
     # Действия
     echo "📊 Действия:"
     echo "🔍 Монитор активности | shell=open -a \"Activity Monitor\""
-    echo "🗑️ Очистить память (purge) | shell=\"$0\" _purge_memory"
+    echo "🗑️ Очистить память (purge) | shell=\"$0\" param1=\"_purge_memory\""
 }
 
 # Обработка команд
