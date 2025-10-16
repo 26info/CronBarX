@@ -6,9 +6,9 @@
 if scutil --proxy | grep -q "Enable : 1"; then
     echo "🛡️ VPN"
     echo "---"
-    echo "Подключение через VPN | color=green"
+    echo "Подключение через VPN"
 else
     echo "🌐 DIRECT" 
     echo "---"
-    echo "Прямое подключение | color=red"
+    echo "Прямое подключение"
 fi
