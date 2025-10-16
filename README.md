@@ -8,7 +8,7 @@
 [![Swift](https://img.shields.io/badge/Swift-4.2-orange?logo=swift)](https://swift.org/)
 [![macOS](https://img.shields.io/badge/macOS-10.13+-blue?logo=apple)](https://www.apple.com/macos/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![Memory](https://img.shields.io/badge/Memory-~20_MB-success.svg)]()
+[![Memory](https://img.shields.io/badge/Memory-~30_MB-success.svg)]()
 [![Downloads](https://img.shields.io/github/downloads/26info/CronBarX/total.svg)](https://github.com/26info/CronBarX/releases)
 
  [English](#english) • [Русский](#русский)
