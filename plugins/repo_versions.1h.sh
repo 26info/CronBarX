@@ -124,8 +124,9 @@ main_menu() {
     done < <(get_cached_data)
     
     echo "---"
-    echo "✏️ Edit URLs | shell=open -t $CONFIG_FILE refresh=true"
-    echo "🗑️ Clear Cache | shell=rm -f $CACHE_FILE refresh=true"
+    echo "✏️ Edit URLs | shell=open param1=\"$CONFIG_FILE\" refresh=true"
+    echo "🗑️ Clear Cache | shell=\"rm -f $CACHE_FILE\" refresh=true"
+    echo "🔄 Refresh | refresh=true"
 }
 
 # Force refresh
@@ -134,7 +135,7 @@ force_refresh() {
     echo "✅ Cache cleared"
 }
 
-case "$1" in
+case "${1}" in
     "_refresh")
         force_refresh
         ;;
