@@ -118,37 +118,37 @@ echo "-- 📊 Обновить данные | refresh=true"
 echo "---"
 
 echo "🌡️ Прогноз погоды"
-echo "-- Текущая погода | shell=\"$0\" _show_current_weather"
-echo "-- Краткий прогноз | shell=\"$0\" _show_compact_weather"
-echo "-- Фаза луны | shell=\"$0\" _show_moon_phase"
+echo "-- Текущая погода | shell=\"$0\" param1=\"_show_current_weather\""
+echo "-- Краткий прогноз | shell=\"$0\" param1=\"_show_compact_weather\""
+echo "-- Фаза луны | shell=\"$0\" param1=\"_show_moon_phase\""
 
 echo "---"
 
 echo "⚙️ Настройки"
-echo "-- Сменить город | shell=\"$0\" _change_location"
-echo "-- Открыть карту | shell=\"$0\" _show_weather_map"
+echo "-- Сменить город | shell=\"$0\" param1=\"_change_location\""
+echo "-- Открыть карту | shell=\"$0\" param1=\"_show_weather_map\""
 echo "-- Текущий город: $location"
 
 echo "---"
 
 echo "🏙️ Популярные города"
-echo "-- Москва | shell=\"$0\" _set_location Moscow"
-echo "-- СПб | shell=\"$0\" _set_location 'Saint Petersburg'"
-echo "-- Лондон | shell=\"$0\" _set_location London"
-echo "-- Нью-Йорк | shell=\"$0\" _set_location 'New York'"
-echo "-- Токио | shell=\"$0\" _set_location Tokyo"
+echo "-- Москва | shell=\"$0\" param1=\"_set_location\" param2=\"Moscow\""
+echo "-- СПб | shell=\"$0\" param1=\"_set_location\" param2=\"Saint Petersburg\""
+echo "-- Лондон | shell=\"$0\" param1=\"_set_location\" param2=\"London\""
+echo "-- Нью-Йорк | shell=\"$0\" param1=\"_set_location\" param2=\"New York\""
+echo "-- Токио | shell=\"$0\" param1=\"_set_location\" param2=\"Tokyo\""
 
 echo "---"
 
 echo "🌐 Быстрые действия"
-echo "-- Открыть wttr.in | shell=open https://wttr.in/$location"
-echo "-- Сбросить город | shell=\"$0\" _reset_location"
+echo "-- Открыть wttr.in | shell=open param1=\"https://wttr.in/$location\""
+echo "-- Сбросить город | shell=\"$0\" param1=\"_reset_location\""
 
 echo "---"
 echo "🔄 Обновить | refresh=true"
 
 # Обработка команд
-case "$1" in
+case "${1}" in
     "_show_current_weather")
         show_current_weather
         ;;
