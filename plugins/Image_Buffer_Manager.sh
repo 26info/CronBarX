@@ -62,7 +62,7 @@ main() {
     if [ -z "$PNGPASTE" ]; then
         echo "❌ pngpaste не установлен"
         echo "---"
-        echo "📦 Установить pngpaste | shell=\"$0\" _install"
+        echo "📦 Установить pngpaste | shell=\"$0\" param1=\"_install\""
         return
     fi
     
@@ -88,11 +88,12 @@ main() {
     echo "---"
     
     if [ -n "$buffer_info" ]; then
-        echo "💾 Сохранить изображение | shell=\"$0\" _save"
-        echo "👀 Предпросмотр | shell=\"$0\" _preview"
+        echo "💾 Сохранить изображение | shell=\"$0\" param1=\"_save\" refresh=true"
+        echo "👀 Предпросмотр | shell=\"$0\" param1=\"_preview\""
     fi
     
-    echo "📁 Открыть папку | shell=\"$0\" _open_folder"
+    echo "📁 Открыть папку | shell=\"$0\" param1=\"_open_folder\""
+    echo "🔄 Обновить | refresh=true"
 }
 
 # Сохранить изображение
@@ -103,7 +104,7 @@ _save() {
     fi
     
     if [ -z "$tmp_file" ] || [ ! -f "$tmp_file" ]; then
-        osascript -e 'display dialog "❌ Нет изображения в буфере" buttons {"OK"} with icon stop'
+        osascript -e 'display dialog "❌ Нет изображения в буфере" buttons {"OK"} default button "OK" with icon stop'
         return
     fi
     
@@ -119,8 +120,10 @@ _save() {
         rm -f "$tmp_file" "/tmp/current_clipboard_image.txt" 2>/dev/null
         
         osascript -e "display notification \"📸 $filename (${file_size_kb} KB)\" with title \"Image Saved\""
+        echo "✅ Изображение сохранено: $filename"
     else
         osascript -e 'display notification "❌ Ошибка сохранения" with title "Error"'
+        echo "❌ Ошибка сохранения изображения"
     fi
 }
 
@@ -132,7 +135,7 @@ _preview() {
     fi
     
     if [ -z "$tmp_file" ] || [ ! -f "$tmp_file" ]; then
-        osascript -e 'display dialog "❌ Нет изображения в буфере" buttons {"OK"} with icon stop'
+        osascript -e 'display dialog "❌ Нет изображения в буфере" buttons {"OK"} default button "OK" with icon stop'
         return
     fi
     
@@ -141,18 +144,27 @@ _preview() {
     (sleep 5; rm -f "$tmp_file" "/tmp/current_clipboard_image.txt" 2>/dev/null) &
 }
 
-install_pngpaste() {
-    osascript -e 'tell application "Terminal" to do script "brew install pngpaste"'
+# Установка pngpaste
+_install() {
+    if command -v brew &> /dev/null; then
+        osascript -e 'tell application "Terminal" to activate' -e 'tell application "Terminal" to do script "brew install pngpaste"'
+        echo "📦 Запущена установка pngpaste через Homebrew"
+    else
+        osascript -e 'display dialog "❌ Homebrew не установлен\n\nУстановите Homebrew с сайта:\nhttps://brew.sh" buttons {"OK"} default button "OK" with icon stop'
+        echo "❌ Homebrew не установлен"
+    fi
 }
 
-open_folder() {
+# Открыть папку
+_open_folder() {
     open "$SAVE_DIR"
 }
 
-case "$1" in
+# Обработка параметров
+case "${1}" in
     "_save") _save ;;
     "_preview") _preview ;;
-    "_install") install_pngpaste ;;
-    "_open_folder") open_folder ;;
+    "_install") _install ;;
+    "_open_folder") _open_folder ;;
     *) main ;;
 esac
