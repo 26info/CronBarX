@@ -81,14 +81,14 @@ if is_running; then
     echo "✅ Connected"
     echo "Xray is running"
 else
-    echo "❌ Disconnected" 
+    echo "❌ Disconnected"
     echo "Xray not running"
 fi
 
 echo "---"
 
-# Connection test - встроенная функция
-echo "Тест подключения | shell=/bin/bash -c 'source \"$0\"; test_connection'"
+# Connection test - правильный формат вызова
+echo "Тест подключения | shell=\"$0\" param1=\"_test_connection\""
 
 echo "---"
 
@@ -96,22 +96,28 @@ echo "---"
 echo "⚙️ $(get_config_info)"
 
 if [ -f "$VLESS_URL_FILE" ]; then
-    echo "-- Изменить URL | shell=/bin/bash -c 'source \"$0\"; change_url'"
+    echo "-- Изменить URL | shell=\"$0\" param1=\"_change_url\""
 fi
 
-echo "-- Открыть папку конфигурации | shell=open \"$CONFIG_DIR\""
+echo "-- Открыть папку конфигурации | shell=open param1=\"$CONFIG_DIR\""
 
 echo "---"
 
 # Logs and info
 echo "📊 Системная информация"
-echo "-- Просмотр логов | shell=open \"$LOG_FILE\""
+echo "-- Просмотр логов | shell=open param1=\"$LOG_FILE\""
 echo "-- PID: $(cat \"$PID_FILE\" 2>/dev/null || echo N/A)"
 
 echo "---"
 
-echo "ℹ️ О VLESS Client macOS | shell=open https://github.com/26info/VLESS-Client-macOS"
+echo "ℹ️ О VLESS Client macOS | shell=open param1=\"https://github.com/26info/VLESS-Client-macOS\""
 
 echo "---"
 
 echo "🔄 Обновить | refresh=true"
+
+# Обработка параметров
+case "${1}" in
+    "_test_connection") test_connection ;;
+    "_change_url") change_url ;;
+esac
