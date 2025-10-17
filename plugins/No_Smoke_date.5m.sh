@@ -237,7 +237,7 @@ main() {
     
     echo "💰 Сэкономлено:"
     echo "🚬 Сигарет не выкурено: $cigarettes_saved | refresh=true"
-    echo "💵 Денег сэкономлено: $money_saved руб | refresh=true | refresh=true"
+    echo "💵 Денег сэкономлено: $money_saved руб | refresh=true"
     echo "📈 В день: $((CIGARETTES_PER_DAY * PRICE_PER_CIGARETTE)) руб | refresh=true"
     
     echo "---"
