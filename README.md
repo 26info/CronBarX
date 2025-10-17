@@ -77,6 +77,14 @@ CronBarX includes comprehensive file logging for easy troubleshooting:
 
 ---
 
+<div align="center">
+
+![CronBarX_screen](https://github.com/user-attachments/assets/723ad0ec-0c84-4ea5-89ac-7d7520df99b3)
+
+</div>
+
+---
+
 ## Русский
 
 🚀 **Легковесный менеджер для статус-бара macOS с поддержкой множества инстансов и плагинов**
