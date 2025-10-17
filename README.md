@@ -2,7 +2,7 @@
 
 <div align="center">
 
-🇺🇸 **Lightweight xbar alternative with plugin support** 
+🇺🇸 **Lightweight xbar alternative with plugin support**  
 🇷🇺 **Легковесная альтернатива xbar с поддержкой плагинов**  
 
 [![Swift](https://img.shields.io/badge/Swift-4.2-orange?logo=swift)](https://swift.org/)
