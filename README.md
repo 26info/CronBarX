@@ -11,6 +11,8 @@
 [![Memory](https://img.shields.io/badge/Memory-~30_MB-success.svg)]()
 [![Downloads](https://img.shields.io/github/downloads/26info/CronBarX/total.svg)](https://github.com/26info/CronBarX/releases)
 
+![single-8022263-0=](https://github.com/user-attachments/assets/454d5e15-f1ba-46a4-80fa-3b43a114146c)
+
  [English](#english) • [Русский](#русский)
 
 </div>
