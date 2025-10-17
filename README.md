@@ -79,7 +79,7 @@ CronBarX includes comprehensive file logging for easy troubleshooting:
 
 <div align="center">
 
-Program Screenshot / Скриншот работы программы
+**Program Screenshot / Скриншот работы программы**
 
 ![CronBarX_screen](https://github.com/user-attachments/assets/723ad0ec-0c84-4ea5-89ac-7d7520df99b3)
 
