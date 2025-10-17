@@ -7,7 +7,7 @@
 
 [![macOS](https://img.shields.io/badge/macOS-10.13+-blue?logo=apple)](https://www.apple.com/macos/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![Memory](https://img.shields.io/badge/Memory-~30_MB-success.svg)]()
+[![Memory](https://img.shields.io/badge/Memory-~20_MB-success.svg)]()
 [![Downloads](https://img.shields.io/github/downloads/26info/CronBarX/total.svg)](https://github.com/26info/CronBarX/releases)
 
 ![single-8022263-0=](https://github.com/user-attachments/assets/454d5e15-f1ba-46a4-80fa-3b43a114146c)
@@ -27,7 +27,7 @@
 — **Multi-instances** — run multiple scripts simultaneously  
 — **Plugin manager** — install plugins directly from GitHub repository  
 — **Auto-update** — automatic script output refresh  
-— **Low memory usage** — ~30 MB  
+— **Low memory usage** — ~20 MB  
 — **Native interface** — full integration with macOS  
 — **Bash/zsh support** — works with any shell scripts  
 
@@ -94,7 +94,7 @@ CronBarX includes comprehensive file logging for easy troubleshooting:
 — **Мульти-инстансы** — запускайте несколько скриптов одновременно  
 — **Менеджер плагинов** — устанавливайте плагины прямо из GitHub репозитория  
 — **Автообновление** — автоматическое обновление вывода скриптов  
-— **Низкое потребление памяти** — ~30 МБ  
+— **Низкое потребление памяти** — ~20 МБ  
 — **Нативный интерфейс** — полная интеграция с macOS  
 — **Поддержка bash/zsh** — работает с любыми shell-скриптами  
 
