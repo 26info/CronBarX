@@ -47,11 +47,12 @@
 
 ### 🚀 Quick Start
 
-1. Launch CronBarX  
-2. Click the ⚙️ icon in the status bar  
-3. Select "Create new instance"  
-4. Choose your shell script  
-5. Done! The script will appear in the status bar  
+1. Download the latest version from the [Releases section](https://github.com/26info/CronBarX/releases)
+2. Launch CronBarX  
+3. Click the ⚙️ icon in the status bar  
+4. Select "Create new instance"  
+5. Choose your shell script  
+6. Done! The script will appear in the status bar  
 
 ### 📝 Script Format
 
@@ -105,11 +106,12 @@ CronBarX includes comprehensive file logging for easy troubleshooting:
 
 ### 🚀 Быстрый старт
 
-1. Запустите CronBarX  
-2. Нажмите на иконку ⚙️ в статус-баре  
-3. Выберите «Создать новый инстанс»  
-4. Выберите ваш shell-скрипт  
-5. Готово! Скрипт появится в статус-баре  
+1. Скачайте последнюю версию из [раздела Releases](https://github.com/26info/CronBarX/releases)
+2. Запустите CronBarX  
+3. Нажмите на иконку ⚙️ в статус-баре  
+4. Выберите «Создать новый инстанс»  
+5. Выберите ваш shell-скрипт  
+6. Готово! Скрипт появится в статус-баре  
 
 ### 📝 Формат скриптов
 
