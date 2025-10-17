@@ -80,8 +80,10 @@ EOF
     )
     
     if [ -n "$price_dialog" ] && [ "$price_dialog" != "0" ]; then
+        # Преобразуем цену в целое число (убираем точку и все после нее)
+        local price_int=$(echo "$price_dialog" | cut -d. -f1)
         CIGARETTES_PER_DAY=$cigs_dialog
-        PRICE_PER_CIGARETTE=$price_dialog
+        PRICE_PER_CIGARETTE=$price_int
         save_settings
         osascript -e "display notification \"✅ Настройки сохранены: $CIGARETTES_PER_DAY сигарет/день, $PRICE_PER_CIGARETTE руб/сигарета\" with title \"Не курю\"" &>/dev/null
         echo "✅ Настройки сохранены"
